@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Usage example:
+# ./post-to-slack "message" <slack-incoming-webhook>
+
+test $# -lt 2 -o -z $2 && exit 0 # no hook? keep silence then
+
+curl -s -X POST --data-urlencode "payload={\"text\": \"$1\"}" $2
+echo # add newline after 'ok' response, improves build log reading ;-P
+
+exit 0 # we should continue even if we could not post to slack
